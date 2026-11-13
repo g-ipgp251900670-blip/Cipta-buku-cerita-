@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jom Cipta Cerita! | DLO Bahasa Melayu Tahun 6</title>
+<style>
+:root{--green:#287a59;--green2:#e8f5ed;--mint:#f3faf5;--ink:#23352c;--muted:#718078;--line:#dce9df;--white:#fff;--orange:#fff1d8;--red:#fde9e7;--shadow:0 10px 28px rgba(39,92,63,.08)}
+*{box-sizing:border-box}body{margin:0;background:#f5faf6;color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+header{background:linear-gradient(120deg,#236c4c,#4b9b70);color:white;padding:22px max(5vw,20px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-size:23px;font-weight:800}.brand small{display:block;font-size:12px;font-weight:500;opacity:.9;margin-top:5px}
+.wrap{max-width:1120px;margin:28px auto;padding:0 18px}.panel,.card{background:white;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
+h1,h2,h3{margin-top:0}h1{font-size:25px}h2{font-size:21px}h3{font-size:17px}.muted{color:var(--muted);font-size:14px;line-height:1.55}
+button,.btn{border:0;border-radius:11px;padding:11px 16px;background:var(--green);color:white;font-weight:700;cursor:pointer;font-size:14px}
+button:hover{filter:brightness(.95)}button.secondary{background:var(--green2);color:var(--green)}button.light{background:white;color:var(--green)}
+input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font:inherit;background:white;color:var(--ink)}
+label{display:block;font-weight:700;font-size:13px;margin:12px 0 6px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+.stat{background:var(--mint);border:1px solid var(--line);border-radius:15px;padding:16px}.stat span{display:block;color:var(--muted);font-size:12px}.stat strong{font-size:27px;display:block;margin-top:7px;color:var(--green)}
+.activity{display:flex;gap:14px;align-items:flex-start}.emoji{font-size:30px;background:var(--green2);border-radius:13px;padding:12px}
+.activity p{margin:6px 0 12px}.activity button{white-space:nowrap}
+.toprow{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line)}th{background:var(--mint);color:#426b53}
+.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:var(--green2);color:var(--green);font-size:12px;font-weight:700}.badge.pending{background:var(--orange);color:#94651b}
+.hidden{display:none!important}.choice{display:block;padding:12px;border:1px solid var(--line);border-radius:10px;margin:8px 0;cursor:pointer}.choice input{width:auto;margin-right:8px}
+.notice{background:#fff8e9;border:1px solid #f1dfb8;border-radius:12px;padding:13px;color:#775b26;font-size:13px;line-height:1.5}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:28px 10px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}header{align-items:flex-start}.activity{flex-wrap:wrap}.activity button{margin-left:58px}table{font-size:12px}th,td{padding:8px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">🌿 Jom Cipta Cerita!<small>DLO Bahasa Melayu Tahun 6 · Menjaga Kebersihan Sekolah</small></div>
+  <div id="headerActions"></div>
+</header>
+<main class="wrap">
+<section id="loginView" class="panel" style="max-width:560px;margin:50px auto">
+  <h1>Selamat datang! 👋</h1><p class="muted">Pilih paparan mengikut peranan anda untuk menggunakan bahan pembelajaran ini.</p>
+  <div class="grid">
+    <button onclick="showLogin('murid')">🧒 Saya Murid</button>
+    <button class="secondary" onclick="showLogin('guru')">👩‍🏫 Saya Guru</button>
+  </div>
+  <div id="loginForm" class="hidden">
+    <h2 id="loginTitle" style="margin-top:24px"></h2>
+    <label id="nameLabel">Nama</label><input id="personName" placeholder="Masukkan nama">
+    <div id="classField"><label>Kelas</label><input id="personClass" placeholder="Contoh: 6 Bestari"></div>
+    <div class="actions"><button onclick="enterApp()">Masuk</button><button class="secondary" onclick="resetLogin()">Kembali</button></div>
+    <p id="loginError" class="muted" style="color:#b33"></p>
+  </div>
+</section>
+
+<section id="studentView" class="hidden">
+  <div class="toprow"><div><h1>Dashboard Murid 📚</h1><p class="muted" id="studentWelcome"></p></div></div>
+  <div class="panel" style="margin:18px 0"><h2>Aktiviti Pembelajaran</h2><p class="muted">Lengkapkan aktiviti mengikut turutan atau pilih aktiviti yang ingin dilakukan.</p>
+    <div class="grid">
+      <article class="card activity"><div class="emoji">🔎</div><div><h3>1. Kenali Buku Cerita</h3><p class="muted">Kenal pasti watak, latar dan plot dalam cerita.</p><button onclick="startActivity('kenali')">Mula aktiviti</button></div></article>
+      <article class="card activity"><div class="emoji">🧩</div><div><h3>2. Susun Jalan Cerita</h3><p class="muted">Susun peristiwa supaya jalan cerita tersusun.</p><button onclick="startActivity('susun')">Mula aktiviti</button></div></article>
+      <article class="card activity"><div class="emoji">✏️</div><div><h3>3. Bengkel Editor</h3><p class="muted">Baiki ejaan, tanda baca dan ayat.</p><button onclick="startActivity('editor')">Mula aktiviti</button></div></article>
+      <article class="card activity"><div class="emoji">📖</div><div><h3>4. Misi Cipta Buku Cerita</h3><p class="muted">Hasilkan cerita pendek tentang kebersihan sekolah.</p><button onclick="startActivity('cipta')">Mula aktiviti</button></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="teacherView" class="hidden">
+  <div class="toprow"><div><h1>Dashboard Guru 👩‍🏫</h1><p class="muted">Pemantauan penyertaan dan pencapaian murid.</p></div><button class="secondary" onclick="exportCSV()">⬇ Muat turun rekod CSV</button></div>
+  <div class="stats">
+    <div class="stat"><span>Jumlah murid direkodkan</span><strong id="totalStudents">0</strong></div>
+    <div class="stat"><span>Murid telah menjawab</span><strong id="answeredStudents">0</strong></div>
+    <div class="stat"><span>Belum lengkap semua aktiviti</span><strong id="pendingStudents">0</strong></div>
+    <div class="stat"><span>Purata markah</span><strong id="averageScore">—</strong></div>
+  </div>
+  <div class="panel" style="margin-bottom:18px">
+    <div class="toprow"><h2>Keputusan Murid</h2><button class="secondary" onclick="renderTeacher()">↻ Segar semula</button></div>
+    <p class="muted">Markah dipaparkan berdasarkan aktiviti yang telah dihantar oleh murid.</p>
+    <div style="overflow-x:auto"><table><thead><tr><th>Nama murid</th><th>Kelas</th><th>Aktiviti selesai</th><th>Markah purata</th><th>Status</th></tr></thead><tbody id="resultsBody"></tbody></table></div>
+    <p id="emptyResults" class="muted">Belum ada keputusan murid. Minta murid masuk dan hantar aktiviti terlebih dahulu.</p>
+  </div>
+  <div class="panel"><h2>Ringkasan Aktiviti</h2><div id="activitySummary" class="grid"></div></div>
+  <div class="notice" style="margin-top:16px">Nota: Versi HTML ini menyimpan rekod pada pelayar/peranti yang sama. Untuk guru menerima keputusan daripada peranti murid yang berbeza, aplikasi perlu disambungkan kepada pangkalan data dalam talian.</div>
+</section>
+
+<section id="activityView" class="panel hidden">
+  <div class="toprow"><h1 id="activityTitle">Aktiviti</h1><button class="secondary" onclick="backToStudent()">← Kembali ke aktiviti</button></div>
+  <div id="activityContent"></div>
+</section>
+</main>
+<footer>DLO Bahasa Melayu Tahun 6 · SK 3.3 · SP 3.3.1 dan SP 3.3.2</footer>
+<script>
+const KEY='jomCiptaCeritaRecordsV1';
+let role='', currentStudent=null, currentActivity='';
+const activities={
+kenali:{title:'Kenali Buku Cerita',questions:[
+{q:'Siapakah yang disebut sebagai watak dalam cerita?',o:['Orang atau haiwan yang terlibat dalam cerita','Tempat cerita berlaku','Masa cerita berlaku'],a:0},
+{q:'Bahagian permulaan cerita biasanya memperkenalkan…',o:['Pengajaran sahaja','Watak dan latar','Kesudahan cerita'],a:1},
+{q:'Latar tempat merujuk kepada…',o:['Lokasi peristiwa berlaku','Sifat watak','Tajuk cerita'],a:0}]},
+susun:{title:'Susun Jalan Cerita',questions:[
+{q:'Apakah urutan asas jalan cerita yang sesuai?',o:['Penutup, perkembangan, permulaan','Permulaan, perkembangan, penutup','Perkembangan, penutup, permulaan'],a:1},
+{q:'Peristiwa yang menunjukkan masalah mula berlaku biasanya terdapat pada…',o:['Perkembangan cerita','Tajuk','Senarai watak sahaja'],a:0},
+{q:'Mengapakah peristiwa perlu disusun dengan betul?',o:['Supaya cerita lebih koheren dan mudah difahami','Supaya cerita tiada watak','Supaya cerita menjadi lebih pendek sahaja'],a:0}]},
+editor:{title:'Bengkel Editor',questions:[
+{q:'Pilih ayat yang menggunakan huruf besar dan tanda baca dengan betul.',o:['murid membersihkan kelas.','Murid membersihkan kelas.','Murid membersihkan kelas'],a:1},
+{q:'Pilih ejaan yang betul.',o:['kebersihan','kebersihhan','kebersiahan'],a:0},
+{q:'Ayat manakah lebih jelas dan gramatis?',o:['Sampah membuang Ali ke dalam tong.','Ali membuang sampah ke dalam tong.','Ke dalam tong Ali sampah membuang.'],a:1}]}
+};
+function getRecords(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+function saveRecords(data){localStorage.setItem(KEY,JSON.stringify(data))}
+function showLogin(r){role=r;document.getElementById('loginForm').classList.remove('hidden');document.getElementById('loginTitle').textContent=r==='guru'?'Log Masuk Guru':'Log Masuk Murid';document.getElementById('classField').classList.toggle('hidden',r==='guru');document.getElementById('nameLabel').textContent=r==='guru'?'Nama guru':'Nama murid';document.getElementById('personName').value='';document.getElementById('loginError').textContent=''}
+function resetLogin(){document.getElementById('loginForm').classList.add('hidden')}
+function enterApp(){const name=document.getElementById('personName').value.trim();if(!name){document.getElementById('loginError').textContent='Sila masukkan nama.';return}
+document.getElementById('loginView').classList.add('hidden');document.getElementById('headerActions').innerHTML='<button class="light" onclick="logout()">Log keluar</button>';
+if(role==='guru'){document.getElementById('teacherView').classList.remove('hidden');renderTeacher()}
+else{const cls=document.getElementById('personClass').value.trim()||'Tidak dinyatakan';currentStudent={name,cls};document.getElementById('studentWelcome').textContent=`Selamat belajar, ${name} · ${cls}`;document.getElementById('studentView').classList.remove('hidden')}}
+function logout(){['studentView','teacherView','activityView'].forEach(id=>document.getElementById(id).classList.add('hidden'));document.getElementById('loginView').classList.remove('hidden');document.getElementById('headerActions').innerHTML='';resetLogin()}
+function startActivity(id){currentActivity=id;document.getElementById('studentView').classList.add('hidden');document.getElementById('activityView').classList.remove('hidden');const box=document.getElementById('activityContent');
+if(id==='cipta'){document.getElementById('activityTitle').textContent=activitiesTitle(id);box.innerHTML=`<p class="muted">Tulis cerita pendek bertajuk <b>Sekolah Bersih, Murid Ceria</b>. Pastikan cerita mempunyai permulaan, perkembangan dan penutup.</p><label>Tajuk cerita</label><input id="storyTitle" value="Sekolah Bersih, Murid Ceria"><label>Hasil cerita</label><textarea id="storyText" rows="9" placeholder="Pada suatu pagi, ..."></textarea><p class="muted">Guru boleh membaca hasil cerita ini dalam rekod murid jika menggunakan peranti yang sama.</p><button onclick="submitStory()">Hantar cerita</button>`;return}
+const a=activities[id];document.getElementById('activityTitle').textContent=a.title;box.innerHTML='<p class="muted">Pilih satu jawapan bagi setiap soalan.</p>'+a.questions.map((q,i)=>`<div style="margin:20px 0"><b>${i+1}. ${q.q}</b>${q.o.map((o,j)=>`<label class="choice"><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join('')}</div>`).join('')+'<button onclick="submitQuiz()">Hantar jawapan</button><p id="quizError" class="muted"></p>'}
+function activitiesTitle(id){return 'Misi Cipta Buku Cerita'}
+function submitQuiz(){const a=activities[currentActivity];let score=0;for(let i=0;i<a.questions.length;i++){const selected=document.querySelector(`input[name="q${i}"]:checked`);if(!selected){document.getElementById('quizError').textContent='Sila jawab semua soalan dahulu.';return}if(Number(selected.value)===a.questions[i].a)score++}
+const mark=Math.round(score/a.questions.length*100);storeResult(currentActivity,mark,'');alert(`Jawapan dihantar! Markah anda: ${mark}%`);backToStudent()}
+function submitStory(){const title=document.getElementById('storyTitle').value.trim(),story=document.getElementById('storyText').value.trim();if(story.length<30){alert('Sila tulis cerita sekurang-kurangnya 30 aksara.');return}let mark=story.length>=180?100:story.length>=100?85:70;storeResult('cipta',mark,{title,story});alert('Cerita berjaya dihantar!');backToStudent()}
+function storeResult(id,mark,work){const data=getRecords(),key=currentStudent.name.toLowerCase()+'|'+currentStudent.cls.toLowerCase();if(!data[key])data[key]={name:currentStudent.name,cls:currentStudent.cls,results:{}};data[key].results[id]={mark,work,submitted:new Date().toLocaleString('ms-MY')};saveRecords(data)}
+function backToStudent(){document.getElementById('activityView').classList.add('hidden');document.getElementById('studentView').classList.remove('hidden')}
+function renderTeacher(){const data=Object.values(getRecords()),body=document.getElementById('resultsBody');body.innerHTML='';let allMarks=[],done=0;const ids=['kenali','susun','editor','cipta'];let counts={kenali:0,susun:0,editor:0,cipta:0};
+data.forEach(s=>{const results=Object.values(s.results||{});if(results.length)done++;results.forEach(r=>allMarks.push(Number(r.mark)));ids.forEach(id=>{if(s.results&&s.results[id])counts[id]++});const avg=results.length?Math.round(results.reduce((n,r)=>n+Number(r.mark),0)/results.length):0;const tr=document.createElement('tr');tr.innerHTML=`<td>${esc(s.name)}</td><td>${esc(s.cls)}</td><td>${results.length}/4</td><td>${results.length?avg+'%':'—'}</td><td><span class="badge ${results.length===4?'':'pending'}">${results.length===4?'Lengkap':results.length?'Dalam proses':'Belum jawab'}</span></td>`;body.appendChild(tr)});
+document.getElementById('totalStudents').textContent=data.length;document.getElementById('answeredStudents').textContent=done;document.getElementById('pendingStudents').textContent=Math.max(0,data.length-done);document.getElementById('averageScore').textContent=allMarks.length?Math.round(allMarks.reduce((a,b)=>a+b,0)/allMarks.length)+'%':'—';document.getElementById('emptyResults').classList.toggle('hidden',data.length>0);
+const labels={kenali:'Kenali Buku Cerita',susun:'Susun Jalan Cerita',editor:'Bengkel Editor',cipta:'Cipta Buku Cerita'};document.getElementById('activitySummary').innerHTML=ids.map(id=>`<div class="stat"><span>${labels[id]}</span><strong>${counts[id]}</strong><span>murid telah menghantar</span></div>`).join('')}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function exportCSV(){const data=Object.values(getRecords());if(!data.length){alert('Belum ada rekod untuk dimuat turun.');return}let rows=[['Nama','Kelas','Aktiviti selesai','Purata markah','Status']];data.forEach(s=>{const r=Object.values(s.results||{}),avg=r.length?Math.round(r.reduce((a,x)=>a+Number(x.mark),0)/r.length):0;rows.push([s.name,s.cls,r.length+'/4',avg+'%',r.length===4?'Lengkap':r.length?'Dalam proses':'Belum jawab'])});const csv=rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='keputusan-murid.csv';a.click();URL.revokeObjectURL(a.href)}
+</script>
+</body>
+</html>
